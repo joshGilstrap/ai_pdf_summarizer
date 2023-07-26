@@ -1,0 +1,1 @@
+Using PyPDF2, FPDF, and (Hugging Face) AI I've managed to get a satisfactory "study guide" companion for a paper. The information is broken down either page -by-page or paragraph -by -paragraph and loaded into a new pdf.
