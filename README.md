@@ -1,4 +1,5 @@
-# PDF Summarizer - A 🤗AI powered "companion document" generator
+# PDF Summarizer - A 🤗AI powered "companion document" generator 
+*Check the pdfs folder for comparable examples!*
 
 This is a summarization program aimed at making a summarized version of academic and technical documents (or really any other pdf that has text).
 
