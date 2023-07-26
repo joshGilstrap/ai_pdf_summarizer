@@ -3,7 +3,7 @@ from fpdf import FPDF
 from transformers import pipeline
 from pathlib import Path
 
-pdf_path = Path(__file__).parent/"pdfs/linkedin_post.pdf"
+pdf_path = Path(__file__).parent/"pdfs/DancingLinks.pdf"
 reader = PdfReader(pdf_path)
 
 # Known characters that throw errors when writing to pdf
@@ -58,8 +58,7 @@ def write_to_textfile(summaries):
     # Write summaries to text file
     with open("summary.txt", "w", encoding='UTF-8') as f:
         for summary in summaries:
-            clean_text(summary[0]['summary_text'])
-            f.write(summary[0]['summary_text'])
+            f.write(clean_text(summary[0]['summary_text']))
             
 
 def export_to_pdf():
