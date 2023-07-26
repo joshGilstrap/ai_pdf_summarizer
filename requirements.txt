@@ -20,7 +20,7 @@ pandas==2.0.3
 pdfkit==1.0.0
 pip-autoremove==0.10.0
 py-unused-deps==0.3.0
-PyPDF2==3.0.1
+pypdf==3.13.0
 pytz==2023.3
 PyYAML==6.0.1
 regex==2023.6.3

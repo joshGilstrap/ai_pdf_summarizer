@@ -1,9 +1,10 @@
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from fpdf import FPDF
 from transformers import pipeline
 from pathlib import Path
 
 pdf_path = Path(__file__).parent/"pdfs/DancingLinks.pdf"
+# pdf_title = "What's new in Python 3.11.4"
 reader = PdfReader(pdf_path)
 
 # Known characters that throw errors when writing to pdf
@@ -18,9 +19,9 @@ def main():
 
     page_summaries = []
 
-    # read_by_paragraph(reader.pages, page_summaries, summarizer)
+    read_by_paragraph(reader.pages, page_summaries, summarizer)
 
-    read_by_page(reader.pages, page_summaries, summarizer)
+    # read_by_page(reader.pages, page_summaries, summarizer)
 
     write_to_textfile(page_summaries)
     
@@ -39,7 +40,7 @@ def clean_text(text):
 def read_by_page(pages, summaries, summarizer):
     for page in pages:
         test = page.extract_text()
-        summaries.append(summarizer(test, max_length=int(len(test) / 4), min_length=5))
+        summaries.append(summarizer(test, max_length=int(len(test) / 8), min_length=5))
 
 
 # Find every paragraph and feed it in to the summarizer for summary
@@ -48,17 +49,18 @@ def read_by_paragraph(pages, summaries, summarizer):
         text = page.extract_text()
         paragraphs = text.split(".\n")
         for paragraph in paragraphs:
-            if len(paragraph) < 30:
-                summaries.append(paragraph)
+            if len(paragraph) < 40:
+                entry = [{'summary_text': paragraph}]
+                summaries.append(entry)
                 continue
-            summaries.append(summarizer(paragraph, max_length=int(len(paragraph) / 4), min_length=5))
+            summaries.append(summarizer(paragraph, max_length=int(len(paragraph) / 8), min_length=5))
 
 
 def write_to_textfile(summaries):
     # Write summaries to text file
     with open("summary.txt", "w", encoding='UTF-8') as f:
         for summary in summaries:
-            f.write(clean_text(summary[0]['summary_text']))
+            f.write(clean_text(summary[0]['summary_text']) + "\n")
             
 
 def export_to_pdf():
@@ -70,6 +72,7 @@ def export_to_pdf():
     pdf.add_page()
     pdf.set_font("Arial", size=10)
     pdf.set_line_width(0.05)
+    # pdf.title = pdf_title
 
     # Write summary to pdf
     for item in text_file:
